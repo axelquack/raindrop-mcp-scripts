@@ -160,13 +160,13 @@ These are gaps between what the Raindrop app/web UI offers and what is available
 
 | Limitation | Detail |
 |---|---|
-| **No tag suggestions in CLI** | `find_mistagged_bookmarks` only returns the flagged bookmarks — it does not return suggested replacement tags. The Raindrop app and web UI show tag suggestions visually, but this data is not exposed via the MCP or REST API. In the CLI you have to type corrections manually. |
-| **No collection icons via API** | Collection emoji/icons can only be set in the Raindrop UI (right-click → Edit). Neither the MCP nor the REST API accept an icon or emoji field. |
+| **No tag suggestions in CLI** | `find_mistagged_bookmarks` only returns the flagged bookmarks — it does not return suggested replacement tags. The Raindrop app and web UI show tag suggestions visually, but this data is not exposed via the MCP or REST API. In the CLI you have to type corrections manually. ([#22](https://github.com/raindropio/developer-site/issues/22)) |
+| **No collection icons via API** | Collection emoji/icons can only be set in the Raindrop UI (right-click → Edit). Neither the MCP nor the REST API accept an icon or emoji field. ([#26](https://github.com/raindropio/developer-site/issues/26)) |
 | **Broken link detection unreliable** | Many sites (YouTube, GitHub, Instagram, Twitter, Imgur, etc.) block automated HTTP checkers and get incorrectly flagged as broken. The cleanup script filters the most common false-positive domains, but the list is not exhaustive. Always verify manually before deleting. |
-| **`find_bookmarks` unreliable for specific collections** | The MCP `find_bookmarks` tool sometimes returns `"Unknown error"` when filtering by a specific `collection_id`. The scripts work around this by using the direct REST API (`/raindrops/{id}`) for collection-scoped fetches. |
-| **`update_bookmarks` cannot replace tags** | The MCP `update_bookmarks` tool only supports `add_tags` (append), not full tag replacement. Full replacement requires a direct REST `PUT /raindrop/{id}`. The `update_bookmarks()` function in `raindrop_utils.py` handles this routing automatically. |
+| **`find_bookmarks` unreliable for specific collections** | The MCP `find_bookmarks` tool sometimes returns `"Unknown error"` when filtering by a specific `collection_id`. Likely caused by concurrent read/write on the same collection. The scripts work around this by using the direct REST API (`/raindrops/{id}`) for collection-scoped fetches. ([#25](https://github.com/raindropio/developer-site/issues/25)) |
+| **`update_bookmarks` combined tag ops fail** | The MCP `update_bookmarks` tool supports `add_tags` and `remove_tags` as standalone operations, but using both in the same op returns `"Unknown error"` (server-side path conflict). Full tag replacement requires a direct REST `PUT /raindrop/{id}`. The `update_bookmarks()` function in `raindrop_utils.py` handles all three cases automatically: standalone ops go via MCP, combined `remove_tags` + `add_tags` is auto-split into two sequential MCP calls, and `tags` (full replacement) goes via REST. ([#24](https://github.com/raindropio/developer-site/issues/24)) |
 | **`fetch_bookmark_content` returns no tags** | Despite the name suggesting rich content analysis, the tool currently returns no tag suggestions through the API — only the raw page content or nothing at all. |
-| **`find_misplaced_bookmarks` ignores Unsorted** | Passing `collection_ids: [-1]` (Unsorted) returns no suggestions. The AI only evaluates bookmarks that are already in a named collection. |
+| **`find_misplaced_bookmarks` ignores Unsorted** | Passing `collection_ids: [-1]` (Unsorted) returns no suggestions. By design — the tool evaluates whether a bookmark belongs in its current named collection; Unsorted has no semantic identity to evaluate against. Use `find_bookmarks` with `collection_ids: [-1]` instead and let the LLM decide placement. ([#23](https://github.com/raindropio/developer-site/issues/23)) |
 
 ---
 
@@ -174,7 +174,7 @@ These are gaps between what the Raindrop app/web UI offers and what is available
 
 - The Raindrop MCP endpoint is **stateless** — no `initialize` handshake or session ID needed.
 - `find_bookmarks` with a specific `collection_ids` value sometimes returns `"Unknown error"` from the MCP. Use `fetch_all_from_collection()` (REST API) instead.
-- `update_bookmarks` via MCP supports `add_tags`, `collection_id`, and `note` — but **not** full tag replacement. Use `tags` in `update_bookmarks()` from this library and it will route via REST automatically.
+- `update_bookmarks` via MCP supports `add_tags`, `remove_tags`, `collection_id`, and `note`. Combining `remove_tags` + `add_tags` in one op fails — `update_bookmarks()` auto-splits these. Full tag replacement via `tags` routes to REST automatically.
 - Collection icons/emoji are **not settable via the API** — UI only.
 - Rate limit: 120 requests/minute.
 
