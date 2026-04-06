@@ -4,6 +4,8 @@ Raindrop.io utility library — shared by raindrop_cleanup.py and raindrop_impor
 Endpoint: https://api.raindrop.io/rest/v2/ai/mcp  (stateless — no session needed)
 Auth:      Bearer test token from app.raindrop.io → Settings → Integrations → For Developers
 Rate:      120 req/min
+
+See raindrop-bookmark-management.md for full documentation.
 """
 
 import json
@@ -158,28 +160,39 @@ def find_untagged(limit: int = 100, page: int = 0) -> list[dict]:
 def update_bookmarks(updates: list[dict], verbose: bool = True) -> dict:
     """
     Batch update bookmarks. Auto-splits into chunks of 100.
-    Routes 'tags' (full replacement) via REST API, everything else via MCP.
+
+    Routing logic:
+      - 'tags' (full replacement)          → REST PUT /raindrop/{id}
+      - 'remove_tags' + 'add_tags' together → two sequential MCP calls (remove first, then add)
+      - everything else                     → MCP update_bookmarks
 
     Each update op:
         {
             "bookmark_ids": [123],
             "update": {
                 "collection_id": 8995029,   # optional — move
-                "add_tags": ["tag1"],        # optional — append tags
+                "add_tags": ["tag1"],        # optional — append tags (MCP)
+                "remove_tags": ["old"],      # optional — remove tags (MCP)
                 "tags": ["tag1", "tag2"],    # optional — replace all tags (uses REST)
                 "note": "Description",       # optional — set note
             }
         }
+
+    Note: combining 'remove_tags' and 'add_tags' in one MCP op causes a server error —
+    this function automatically splits such ops into two sequential MCP calls.
     """
     results = {}
-    mcp_ops, rest_ops = [], []
+    mcp_ops, rest_ops, split_ops = [], [], []
     for op in updates:
-        if "tags" in op.get("update", {}):
+        u = op.get("update", {})
+        if "tags" in u:
             rest_ops.append(op)
+        elif "remove_tags" in u and "add_tags" in u:
+            split_ops.append(op)
         else:
             mcp_ops.append(op)
 
-    # MCP path
+    # MCP path — standard ops
     for i in range(0, len(mcp_ops), 100):
         batch = mcp_ops[i:i + 100]
         res = mcp_call("update_bookmarks", {"updates": batch})
@@ -189,7 +202,22 @@ def update_bookmarks(updates: list[dict], verbose: bool = True) -> dict:
         if verbose:
             print(f"  Batch {i//100 + 1} ({len(batch)} ops): {result}")
 
-    # REST path (full tag replacement)
+    # MCP path — split remove+add ops into two sequential calls
+    for op in split_ops:
+        u = op["update"]
+        remove_op = {"bookmark_ids": op["bookmark_ids"], "update": {"remove_tags": u["remove_tags"]}}
+        add_op = {"bookmark_ids": op["bookmark_ids"], "update": {"add_tags": u["add_tags"]}}
+        for step, step_op in [("remove", remove_op), ("add", add_op)]:
+            res = mcp_call("update_bookmarks", {"updates": [step_op]})
+            text = get_text(res)
+            result = json.loads(text) if text else {}
+            key = f"split_{op['bookmark_ids'][0]}_{step}"
+            results[key] = result
+            if verbose:
+                print(f"  {step} tags on {op['bookmark_ids']}: {result}")
+            time.sleep(0.3)
+
+    # REST path — full tag replacement
     for op in rest_ops:
         bid = op["bookmark_ids"][0]
         new_tags = op["update"]["tags"]
