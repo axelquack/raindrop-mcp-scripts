@@ -1,3 +1,5 @@
+
+
 # Raindrop.io Scripts
 
 A small collection of Python scripts for bulk managing a [Raindrop.io](https://raindrop.io) bookmark library via the Raindrop MCP API. No external dependencies beyond Python 3 and `curl`.
@@ -36,6 +38,7 @@ RAINDROP_TOKEN=your_test_token_here
 
 - Python 3.10+
 - `curl` (pre-installed on macOS and most Linux systems)
+- `plutil` (macOS system utility, required for `.webloc` parsing)
 
 No `pip install` needed.
 
