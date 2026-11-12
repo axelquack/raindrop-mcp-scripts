@@ -1,3 +1,7 @@
 .env
 __pycache__/
 *.pyc
+
+# secrets and backups (agent rule 2026-11-12)
+*.bak*
+secrets/
