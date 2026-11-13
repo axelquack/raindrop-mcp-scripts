@@ -74,6 +74,7 @@ RAINDROP_TOKEN=<SECRET>
 
 - Python 3.10+
 - `curl` (pre-installed on macOS and most Linux systems)
+- `plutil` (built into macOS; required only for the `.webloc` folder import)
 
 No `pip install` needed.
 

@@ -12,6 +12,14 @@ Use one heading per change: `## YYYY-MM-DD — title`. Under it, keep only the s
 
 This file is the public record. There was no earlier changelog in the tree. Older notes below are taken from the commit subjects. They do not repeat example identifiers.
 
+## 2026-11-13 — plutil requirement
+
+### Changed
+
+- README lists plutil as a requirement for .webloc import, based on #1 by @webbrain-one.
+
+**Why:** `raindrop_importer.py` calls `plutil` when it reads a folder of Safari `.webloc` files. The requirements list did not say so.
+
 ## 2026-11-13 — Public repo standard
 
 ### Added
