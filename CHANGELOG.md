@@ -12,6 +12,14 @@ Use one heading per change: `## YYYY-MM-DD — title`. Under it, keep only the s
 
 This file is the public record. There was no earlier changelog in the tree. Older notes below are taken from the commit subjects. They do not repeat example identifiers.
 
+## 2026-11-13 — Dependabot alerts
+
+### Added
+
+- `SECURITY.md` records that Dependabot alerts and automatic security updates are enabled on this repository as of 2026-11-13.
+
+**Why:** `SECURITY.md` is the record of which GitHub dependency protections are on.
+
 ## 2026-11-13 — Dependabot for GitHub Actions
 
 ### Added

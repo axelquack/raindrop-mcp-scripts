@@ -28,6 +28,8 @@ Dates are Europe/Berlin, `YYYY-MM-DD`.
 | A leak stays valid | The old value still works | Rotate the secret first. Then tell Axel. |
 | History is rewritten in a hurry | A force-push drops other people's commits | A history rewrite needs Axel's force-push approval. |
 
+Dependabot alerts and automatic security updates are enabled on this repository as of 2026-11-13.
+
 ## Never commit
 
 | Item | Where it lives |
