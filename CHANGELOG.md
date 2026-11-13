@@ -12,6 +12,14 @@ Use one heading per change: `## YYYY-MM-DD — title`. Under it, keep only the s
 
 This file is the public record. There was no earlier changelog in the tree. Older notes below are taken from the commit subjects. They do not repeat example identifiers.
 
+## 2026-11-13 — Dependabot for GitHub Actions
+
+### Added
+
+- `.github/dependabot.yml` checks the `github-actions` ecosystem in `/` once a week. Minor and patch updates are one grouped pull request. Major updates stay separate.
+
+**Why:** The workflow pins actions to a commit. A weekly check is how those pins move to a newer release without a floating tag.
+
 ## 2026-11-13 — Pin the gitleaks workflow
 
 ### Changed

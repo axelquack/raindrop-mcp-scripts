@@ -21,6 +21,7 @@ Dates are Europe/Berlin, `YYYY-MM-DD`.
 | Threat | What can happen | What we do |
 | --- | --- | --- |
 | A secret is added to a commit | The value is public as soon as it is pushed | `pre-commit` runs `scripts/check-secrets.sh --staged`. GitHub Actions runs gitleaks on push and pull_request. The workflow pins each action to a commit SHA. The token is `contents: read`, plus `pull-requests: write` on the scan job. |
+| A pinned action stays on an old release | The workflow keeps a commit after a fix is published | Dependabot checks the `github-actions` ecosystem weekly and groups minor and patch updates. |
 | A private detail is written into a public file | Addresses, names, or paths become public | This file's never-appear list is the rule. Longer private notes go in gitignored `CHANGELOG.private.md`, or in the agent-platform handoff, not here. |
 | A local secret file is committed by name | `.env`, a key, or a credential file is published | The secret check rejects those names. `.env.example` is the one env file that may be committed, and it holds names only. |
 | A maintenance script runs from an agent pass | Bookmarks in the live library change | Agents do not run `raindrop_cleanup.py`, `raindrop_importer.py`, or any Raindrop API call. Axel runs those. |
