@@ -12,6 +12,14 @@ Use one heading per change: `## YYYY-MM-DD — title`. Under it, keep only the s
 
 This file is the public record. There was no earlier changelog in the tree. Older notes below are taken from the commit subjects. They do not repeat example identifiers.
 
+## 2026-11-13 — Work tracking rule
+
+### Changed
+
+- AGENTS.md has a Work tracking section: open work goes on the owner's GitHub Project board, not into new TODO.md items.
+
+**Why:** one board for all open work (Axel, 2026-11-13).
+
 ## 2026-11-13 — Public repo standard
 
 ### Added
