@@ -8,6 +8,8 @@ A small collection of Python scripts for bulk managing a [Raindrop.io](https://r
 
 2026-11-13, Europe/Berlin: public repository on the repo standard. The license is PolyForm Noncommercial 1.0.0. Versions published before this commit remain available under Apache-2.0. Axel is the sole contributor.
 
+2026-11-13: the public history was rewritten. Commit hashes before that date changed. Branch protection on `main` is unchanged. The record is in `CHANGELOG.md`.
+
 ## Start here
 
 1. `AGENTS.md`
