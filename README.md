@@ -4,6 +4,44 @@ A small collection of Python scripts for bulk managing a [Raindrop.io](https://r
 
 > **Raindrop Pro required.** The MCP API and AI features (`find_misplaced_bookmarks`, `find_mistagged_bookmarks`, `fetch_bookmark_content`) are only available on a [Raindrop Pro](https://raindrop.io/pro) subscription.
 
+## Status
+
+2026-11-13, Europe/Berlin: public repository on the repo standard. The license is PolyForm Noncommercial 1.0.0. Versions published before this commit remain available under Apache-2.0. Axel is the sole contributor.
+
+## Start here
+
+1. `AGENTS.md`
+2. This file
+3. `BUGFIXES.md` and `SECURITY.md`
+4. `HANDOFF.md`, the last three entries in `CHANGELOG.md`, and `git log -5`. `HANDOFF.md` is gitignored in this public repository.
+5. The current ticket, or else `TODO.md` and `ROADMAP.md`
+6. `docs/README.md`
+
+## Layout
+
+| Path | What |
+| --- | --- |
+| `AGENTS.md` | Agent rules. `CLAUDE.md` is a symlink to this file. |
+| `README.md` | This page. |
+| `CHANGELOG.md` | What changed, newest first. |
+| `ROADMAP.md` | Now, next, later, ideas, done recently. |
+| `TODO.md` | Interim tasks until the agent-ops board exists. |
+| `BUGFIXES.md` | Durable bug writeups (`BF-NNN`). |
+| `HANDOFF.md` | Done, next, open questions. Tracked in a private repo. Gitignored in a public repo. |
+| `SECURITY.md` | Threat model and where secrets live. |
+| `LICENSE` | Rights for this repo. |
+| `justfile` | Recipes. `just` lists them. `just setup` installs the git hook. Imports `just/code.just`. |
+| `just/code.just` | `test` compiles the scripts. It does not call the Raindrop API. |
+| `docs/` | Contributor index. `docs/README.md`. |
+| `.env.example` | Setting name only. The value stays empty. |
+| `.githooks/` | `pre-commit` runs the secret check. |
+| `scripts/check-secrets.sh` | Secret check for the working tree, the index, or history. |
+| `raindrop_cleanup.py` | Interactive AI-powered library maintenance. |
+| `raindrop_importer.py` | Import bookmarks from `.webloc` files or Markdown. |
+| `raindrop_utils.py` | Shared utility library used by both scripts. |
+
+`just` lists the recipes. `just setup` points this clone at `.githooks`. `just test` runs `python3 -m py_compile` on the three scripts and does not call the API.
+
 ## Scripts
 
 | Script | Purpose |
@@ -26,10 +64,10 @@ Go to [app.raindrop.io](https://app.raindrop.io) → Settings → Integrations �
 cp .env.example .env
 ```
 
-Edit `.env` and paste your token:
+Edit `.env` and set the token. `.env` is gitignored. Do not commit it.
 
 ```
-RAINDROP_TOKEN=your_test_token_here
+RAINDROP_TOKEN=<SECRET>
 ```
 
 **3. Requirements**
@@ -118,13 +156,14 @@ import raindrop_utils as rd
 for c in rd.list_collections():
     print(c["collection_id"], c["title"])
 
-# Fetch all bookmarks from a collection
+# Fetch all bookmarks from a collection.
+# 0 is a placeholder, not a live collection id.
 items = rd.fetch_all_from_collection(0)
 
 # Batch update — move + add tags + note in one call
 rd.update_bookmarks([
     {"bookmark_ids": [123456], "update": {
-        "collection_id": 8995033,
+        "collection_id": 0,
         "add_tags": ["self-hosting"],
         "note": "Brief description of this link"
     }}
@@ -156,7 +195,7 @@ rd.update_bookmarks([
 
 ## Known Limitations
 
-These are gaps between what the Raindrop app/web UI offers and what is available through the API.
+These are gaps between what the Raindrop app/web UI offers and what is available through the API. The same limits are `BF-001` through `BF-007` in `BUGFIXES.md`.
 
 | Limitation | Detail |
 |---|---|
@@ -180,10 +219,8 @@ These are gaps between what the Raindrop app/web UI offers and what is available
 
 ---
 
-## .gitignore
+## License
 
-Make sure `.env` is in your `.gitignore`:
+PolyForm Noncommercial 1.0.0. See `LICENSE`.
 
-```
-.env
-```
+Versions published before this commit remain available under Apache-2.0. Axel is the sole contributor.
