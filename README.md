@@ -6,7 +6,7 @@ A small collection of Python scripts for bulk managing a [Raindrop.io](https://r
 
 ## Status
 
-2026-11-13, Europe/Berlin: public repository on the repo standard. The license is PolyForm Noncommercial 1.0.0. Versions published before this commit remain available under Apache-2.0. Axel is the sole contributor.
+2026-11-13, Europe/Berlin: public repository on the repo standard. The license is PolyForm Noncommercial 1.0.0. Versions published before this commit remain available under Apache-2.0. Axel is the sole contributor. The gitleaks workflow pins its actions to commit SHAs.
 
 ## Start here
 

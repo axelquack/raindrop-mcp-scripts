@@ -12,6 +12,16 @@ Use one heading per change: `## YYYY-MM-DD — title`. Under it, keep only the s
 
 This file is the public record. There was no earlier changelog in the tree. Older notes below are taken from the commit subjects. They do not repeat example identifiers.
 
+## 2026-11-13 — Pin the gitleaks workflow
+
+### Changed
+
+- `.github/workflows/gitleaks.yml` pins `actions/checkout` to `d23441a48e516b6c34aea4fa41551a30e30af803` (`v6.1.0`) and `gitleaks/gitleaks-action` to `e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e` (`v3.0.0`). Those commits are the `v6` and `v3` tags resolved on 2026-11-13.
+- The workflow token is `contents: read`. The scan job also has `pull-requests: write`, which the action uses to list pull-request commits and to write a review comment when it finds a leak. `security-events: write` is not granted: v3 uploads `results.sarif` as a workflow artifact and does not call the code scanning API.
+- The job stops after 10 minutes. A new run on the same workflow and ref cancels the in-progress scan.
+
+**Why:** A floating action tag can move to another commit. A pinned SHA and a job token limited to the calls the scanner makes keep the secret scan from gaining extra repository access.
+
 ## 2026-11-13 — Public repo standard
 
 ### Added
