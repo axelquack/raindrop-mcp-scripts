@@ -77,7 +77,7 @@ def get_text(res: dict) -> str | None:
 # ---------------------------------------------------------------------------
 
 def rest_get(path: str, params: dict = None) -> dict:
-    """Direct Raindrop REST GET. path e.g. '/raindrops/0'."""
+    """Direct Raindrop REST GET. path e.g. '/raindrops/<collection_id>'."""
     url = REST_URL + path
     if params:
         url += "?" + "&".join(f"{k}={v}" for k, v in params.items())
@@ -170,7 +170,7 @@ def update_bookmarks(updates: list[dict], verbose: bool = True) -> dict:
         {
             "bookmark_ids": [123],
             "update": {
-                "collection_id": 0,   # optional — move
+                "collection_id": 0,   # optional — move; 0 is a placeholder, not a live collection
                 "add_tags": ["tag1"],        # optional — append tags (MCP)
                 "remove_tags": ["old"],      # optional — remove tags (MCP)
                 "tags": ["tag1", "tag2"],    # optional — replace all tags (uses REST)
