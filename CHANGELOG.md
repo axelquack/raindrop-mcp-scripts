@@ -12,6 +12,15 @@ Use one heading per change: `## YYYY-MM-DD — title`. Under it, keep only the s
 
 This file is the public record. There was no earlier changelog in the tree. Older notes below are taken from the commit subjects. They do not repeat example identifiers.
 
+## 2026-11-14 — Documentation rule
+
+### Changed
+
+- AGENTS.md: the Documentation, commit & push section now says changes are documented in this repo's own files (not memory notes or chat), staged by explicit path, and that force-pushes need Axel.
+
+**Why:** standing rule from Axel (2026-11-14) for every Grok Bot and Herdr agent.
+
+
 ## 2026-11-13 — Dependabot alerts
 
 ### Added
@@ -37,6 +46,14 @@ This file is the public record. There was no earlier changelog in the tree. Olde
 - The job stops after 10 minutes. A new run on the same workflow and ref cancels the in-progress scan.
 
 **Why:** A floating action tag can move to another commit. A pinned SHA and a job token limited to the calls the scanner makes keep the secret scan from gaining extra repository access.
+
+## 2026-11-13 — Work tracking rule
+
+### Changed
+
+- AGENTS.md has a Work tracking section: open work goes on the owner's GitHub Project board, not into new TODO.md items.
+
+**Why:** one board for all open work (Axel, 2026-11-13).
 
 ## 2026-11-13 — Public repo standard
 
