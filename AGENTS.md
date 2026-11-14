@@ -44,6 +44,7 @@ Read in this order:
 | --- | --- | --- |
 | `.env.example` | Setting name for the Raindrop token. Empty value. No secret | Whoever adds a setting |
 | `.githooks/pre-commit` | Runs `scripts/check-secrets.sh --staged` | Whoever changes the check |
+| `.github/dependabot.yml` | Weekly GitHub Actions updates. Minor and patch versions are grouped | Whoever changes the CI check |
 | `.github/workflows/gitleaks.yml` | Gitleaks on push and pull_request | Whoever changes the CI check |
 | `.gitignore` | Base ignore rules plus the public fragment. Keeps `HANDOFF.md` and `CHANGELOG.private.md` untracked. Also ignores `secrets/` | Whoever changes ignore rules |
 | `.gitleaks.toml` | Gitleaks rules and the license-text allowlist | Whoever changes the secret check |

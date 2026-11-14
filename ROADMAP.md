@@ -29,6 +29,8 @@ The Ideas table replaces `IDEAS.md`. Do not keep a separate ideas file. This rep
 
 ## Done recently
 
+- 2026-11-13 — Dependabot checks GitHub Actions weekly and groups minor and patch updates.
+- 2026-11-13 — Gitleaks workflow pins `actions/checkout` and `gitleaks/gitleaks-action` to commit SHAs. The workflow token is contents read, the scan job may write pull-request comments, and the job stops after 10 minutes.
 - 2026-11-13 — Public history rewritten. Commit hashes before that date changed. Branch protection on `main` is unchanged.
 - 2026-11-13 — Public repo standard applied. License is PolyForm Noncommercial 1.0.0. Older published versions stay under Apache-2.0.
 - 2026-11-12 — Standing documentation, commit, and push rule added to `AGENTS.md`.
