@@ -36,6 +36,14 @@ This file is the public record. There was no earlier changelog in the tree. Olde
 
 **Why:** Clones and links from before this date no longer match the public history. The protection rule on `main` is the same as before the rewrite.
 
+## 2026-11-13 — plutil requirement
+
+### Changed
+
+- README lists plutil as a requirement for .webloc import, based on #1 by @webbrain-one.
+
+**Why:** `raindrop_importer.py` calls `plutil` when it reads a folder of Safari `.webloc` files. The requirements list did not say so.
+
 ## 2026-11-13 — Public repo standard
 
 ### Added

@@ -8,6 +8,8 @@ The license is PolyForm Noncommercial 1.0.0 (`LICENSE`). Versions published befo
 
 2026-11-13: the public history was rewritten. Commit hashes before that date changed. Branch protection on `main` is unchanged.
 
+2026-11-13: `README.md` lists `plutil` as a requirement for the `.webloc` folder import. The note is in `CHANGELOG.md`.
+
 No dated session notes were in the tree, so `docs/archive/` was not created.
 
 ## Pages
