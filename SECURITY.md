@@ -26,7 +26,7 @@ Dates are Europe/Berlin, `YYYY-MM-DD`.
 | A local secret file is committed by name | `.env`, a key, or a credential file is published | The secret check rejects those names. `.env.example` is the one env file that may be committed, and it holds names only. |
 | A maintenance script runs from an agent pass | Bookmarks in the live library change | Agents do not run `raindrop_cleanup.py`, `raindrop_importer.py`, or any Raindrop API call. Axel runs those. |
 | A leak stays valid | The old value still works | Rotate the secret first. Then tell Axel. |
-| History is rewritten in a hurry | A force-push drops other people's commits | A history rewrite needs Axel's force-push approval. |
+| History is rewritten in a hurry | A force-push drops other people's commits | A history rewrite needs Axel's force-push approval. On 2026-11-13 the public history was rewritten with that approval. Commit hashes before that date changed. Branch protection on `main` is unchanged. |
 
 Dependabot alerts and automatic security updates are enabled on this repository as of 2026-11-13.
 
