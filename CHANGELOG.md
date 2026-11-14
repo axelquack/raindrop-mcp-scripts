@@ -28,6 +28,14 @@ This file is the public record. There was no earlier changelog in the tree. Olde
 
 **Why:** one board for all open work (Axel, 2026-11-13).
 
+## 2026-11-13 — History rewrite noted
+
+### Security
+
+- History rewritten to remove example IDs from earlier commits; commit hashes before this date changed. Branch protection on main is unchanged.
+
+**Why:** Clones and links from before this date no longer match the public history. The protection rule on `main` is the same as before the rewrite.
+
 ## 2026-11-13 — Public repo standard
 
 ### Added

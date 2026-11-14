@@ -29,6 +29,7 @@ The Ideas table replaces `IDEAS.md`. Do not keep a separate ideas file. This rep
 
 ## Done recently
 
+- 2026-11-13 — Public history rewritten. Commit hashes before that date changed. Branch protection on `main` is unchanged.
 - 2026-11-13 — Public repo standard applied. License is PolyForm Noncommercial 1.0.0. Older published versions stay under Apache-2.0.
 - 2026-11-12 — Standing documentation, commit, and push rule added to `AGENTS.md`.
 - 2026-04-06 — Importer, interactive cleanup script, and shared utils.
