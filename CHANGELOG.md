@@ -12,6 +12,14 @@ Use one heading per change: `## YYYY-MM-DD — title`. Under it, keep only the s
 
 This file is the public record. There was no earlier changelog in the tree. Older notes below are taken from the commit subjects. They do not repeat example identifiers.
 
+## 2026-11-15 — Secrets hygiene
+
+### Added
+
+- AGENTS.md: a Secrets hygiene section. Never print secret values in diagnostics, logs, transcripts or chat. Give jobs only the keys they need, at start time. If a value is printed, stop, do not repeat it, and report the variable name and where it appeared to Sven (security). Treat the key as exposed. Rotation is Axel's decision.
+
+**Why:** requested by Sven (security). Docs-only; Axel merges this pull request.
+
 ## 2026-11-14 — Documentation rule
 
 ### Changed
